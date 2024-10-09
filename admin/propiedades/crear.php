@@ -16,47 +16,46 @@ $consulta = "SELECT * FROM vendedores";
 $resultado = mysqli_query($db, $consulta);
 
 
-$errores = [];
-
 //Creando instancia
 $propiedad = new Propiedad($_POST);
-$vendedores = $propiedad->all();
+$errores = Propiedad::getErrores();
 
+
+
+//Nombre de la imagen
+$nombreImagen = md5(uniqid(rand(), true));
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    $propiedad = new Propiedad($_POST['propiedad']);
 
-
-    //Nombre de la imagen
-    $nombreImagen = md5(uniqid(rand(), true));
 
     //Realizamos un resize con intervention
 
-
-    if ($_FILES['imagen']['tmp_name']) {
+    if ($_FILES['propiedad']['tmp_name']['imagen']) {
 
         //Comprobar la extensión MIME
-        if ($_FILES['imagen']['type'] === 'image/jpeg') {
+        if ($_FILES['propiedad']['type']['imagen'] === 'image/jpeg') {
             $nombreImagen .= '.jpg';
         }
-        if ($_FILES['imagen']['type'] === 'image/png') {
+        if ($_FILES['propiedad']['type']['imagen'] === 'image/png') {
             $nombreImagen .= '.png';
         }
+
+        $propiedad->setImagen($nombreImagen);
     }
 
-    $propiedad->setImagen($nombreImagen);
     $errores = $propiedad->validar();
 
 
     if (empty($errores)) {
 
-
         if (!is_dir(CARPETA_IMAGENES)) {
             mkdir(CARPETA_IMAGENES);
         }
 
-        $image = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 600);
+        $image = Image::make($_FILES['propiedad']['tmp_name']['imagen'])->fit(800, 600);
         $image->save(CARPETA_IMAGENES . $nombreImagen);
 
         $resultado = $propiedad->guardar();

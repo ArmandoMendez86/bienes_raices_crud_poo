@@ -24,11 +24,6 @@ class Propiedad
     public $creado;
     public $vendedores_id;
 
-    public static function setDb($database)
-    {
-        self::$db = $database;
-    }
-
     public function __construct($valores = [])
     {
         $this->id = $valores['id'] ?? '';
@@ -41,6 +36,12 @@ class Propiedad
         $this->estacionamiento = $valores['estacionamiento'] ?? '';
         $this->creado = Date('Y/m/d');
         $this->vendedores_id = $valores['vendedores_id'] ?? 1;
+    }
+
+
+    public static function setDb($database)
+    {
+        self::$db = $database;
     }
 
     public function guardar()
@@ -162,5 +163,21 @@ class Propiedad
             }
         }
         return $objeto;
+    }
+
+    public static function propiedadXid($id)
+    {
+        $informacioPropiedad = "SELECT * FROM propiedades WHERE id = {$id}";
+        $resultado = self::consultarSQL($informacioPropiedad);
+        return array_shift($resultado);
+    }
+
+    public function sincronizar($args = [])
+    {
+        foreach ($args as $key => $value) {
+            if (property_exists($this, $key) && !is_null($value)) {
+                $this->$key = $value;
+            }
+        }
     }
 }

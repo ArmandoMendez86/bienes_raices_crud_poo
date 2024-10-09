@@ -26,3 +26,9 @@ function debuguear($variable)
     echo '</pre>';
     exit;
 }
+
+function escaparHtml($html)
+{
+    $escapar = htmlspecialchars($html);
+    return $escapar;
+}

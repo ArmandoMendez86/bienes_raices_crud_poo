@@ -3,19 +3,24 @@
 
     <!-- Titulo -->
     <label for="titulo">Titulo:</label>
-    <input type="text" id="titulo" name="titulo" placeholder="Titulo de propiedad" value="<?php echo $propiedad->titulo ?>">
+    <input type="text" id="titulo" name="propiedad[titulo]" placeholder="Titulo de propiedad" value="<?php echo escaparHtml($propiedad->titulo) ?>">
 
     <!-- Precio -->
     <label for="precio">Precio:</label>
-    <input type="number" id="precio" name="precio" placeholder="Precio de propiedad" value="<?php echo $propiedad->precio ?>">
+    <input type="number" id="precio" name="propiedad[precio]" placeholder="Precio de propiedad" value="<?php echo escaparHtml($propiedad->precio) ?>">
 
     <!-- Imagen -->
     <label for="imagen">Imagen:</label>
-    <input type="file" id="imagen" name="imagen" placeholder="Precio de propiedad" accept="image/jpeg, image/png">
+    <input type="file" id="imagen" name="propiedad[imagen]" placeholder="Precio de propiedad" accept="image/jpeg, image/png">
 
+    <?php if ($propiedad->imagen) : ?>
+
+        <img src="../../imagenes/<?php echo $propiedad->imagen ?>" alt="">
+
+    <?php endif ?>
     <!-- Descripción -->
     <label for="descripcion">Descripcion:</label>
-    <textarea id="descripcion" name="descripcion"><?php echo $propiedad->descripcion ?></textarea>
+    <textarea id="descripcion" name="propiedad[descripcion]"><?php echo escaparHtml($propiedad->descripcion) ?></textarea>
 </fieldset>
 
 <fieldset>
@@ -23,15 +28,15 @@
 
     <!-- Habitaciones -->
     <label for="habitaciones">Habitaciones</label>
-    <input type="number" id="habitaciones" name="habitaciones" placeholder="Ej: 2" min="1" max="9" value="<?php echo $propiedad->habitaciones ?>">
+    <input type="number" id="habitaciones" name="propiedad[habitaciones]" placeholder="Ej: 2" min="1" max="9" value="<?php echo escaparHtml($propiedad->habitaciones) ?>">
 
     <!-- Baños -->
     <label for="wc">Baños</label>
-    <input type="number" id="wc" name="wc" placeholder="Ej: 2" min="1" max="9" value="<?php echo $propiedad->wc ?>">
+    <input type="number" id="wc" name="propiedad[wc]" placeholder="Ej: 2" min="1" max="9" value="<?php echo escaparHtml($propiedad->wc) ?>">
 
     <!-- Estacionamiento -->
     <label for="estacionamiento">Estacionamiento</label>
-    <input type="number" id="estacionamiento" name="estacionamiento" placeholder="Ej: 2" min="1" max="9" value="<?php echo $propiedad->estacionamiento ?>">
+    <input type="number" id="estacionamiento" name="propiedad[estacionamiento]" placeholder="Ej: 2" min="1" max="9" value="<?php echo escaparHtml($propiedad->estacionamiento) ?>">
 </fieldset>
 
 <fieldset>
